@@ -19,6 +19,7 @@ class Canvas {
         this.WINDOW = WINDOW;
         this.PI2 = 2 * Math.PI;
 
+        // Callbacks
         const wheel = callbacks.wheel instanceof Function ? callbacks.wheel : function () { };
         const mousemove = callbacks.mousemove instanceof Function ? callbacks.mousemove : function () { };
         const mouseup = callbacks.mouseup instanceof Function ? callbacks.mouseup : function () { };

@@ -5,6 +5,8 @@ class Polygon {
         this.distance = 0;      // Расстояние до камеры
         this.lumen = 1;         // Освещенность полигона [0..1]
         this.visible = true;    // Видимость полигона
+
+        this.center = new Point;// Вычисляемый центр полигона 
     }
 
 
