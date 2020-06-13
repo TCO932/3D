@@ -58,7 +58,6 @@ window.onload = function () {
     function wheel(event) {
         const delta = (event.wheelDelta > 0) ? ZOOM_IN : ZOOM_OUT;
         graph3D.zoomMatrix(delta);
-        console.log(WINDOW.CAMERA);
         graph3D.transform(WINDOW.CAMERA);
         graph3D.transform(WINDOW.CENTER);
     }
