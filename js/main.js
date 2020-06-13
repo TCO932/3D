@@ -28,8 +28,8 @@ window.onload = function () {
     const sur = new Surfaces;
     const canvas = new Canvas({
         id: 'canvas',
-        width: 500,
-        height: 500,
+        width: 700,
+        height: 700,
         callbacks: { wheel, mouseup, mousedown, mousemove, mouseleave },
         WINDOW
     });
@@ -38,19 +38,14 @@ window.onload = function () {
     const ui = new UI({ callbacks: { move, printPolygons, printEdges, printPoints } });
 
     const SCENE = [
-        sur.sphere(30, 5, new Point(0, 0, 0), 'FFFF00', {  }),
-        sur.sphere(16, 2, new Point(10, 0, 0), 'FF00FF', { rotateOy: new Point }),
-        sur.sphere(16, 2, new Point(0, 10, 0), '0000FF', { rotateOz: new Point }),
-        sur.sphere(16, 2, new Point(0, 0, 0), '00FFFF', { rotateOz: new Point }),
-
-        //sur.sphere(30, 5, new Point(0, 0, 0), 'FFFF00', {  }),
-        //sur.sphere(30, 3, new Point(0, 50, 0), '#0080FF', { rotateOz: new Point }),
-        //sur.sphere(30, 1, new Point(0, 58, 0), '#838B8B', { rotateOz: new Point(0, 50, 0), rotateOz: new Point(0, 0, 0) }),
-        //sur.sphere(30, 8, new Point(120, 120, 0), '#BFB169', { rotateOz: new Point }),
-        //sur.bublik(30, 20, new Point(120, 120, 0), '#BFB169', { rotateOz: new Point }),
+        sur.sphere(30, 4, new Point(0, 0, 0), 'FFFF00', {  }),
+        sur.sphere(30, 2, new Point(0, 10, 0), '#0080FF', { rotateOz: new Point }),
+        sur.sphere(30, 1, new Point(3, 12, 0), '#838B8B', { rotateOz: new Point }),
+        sur.sphere(30, 3, new Point(20, 25, 0), '#BFB169', { rotateOz: new Point }),
+        sur.bublik(30, 5, new Point(20, 25, 0), '#BFB169', { rotateOz: new Point }),
     ];
 
-    const LIGHT = new Light(100, 20, 0, 7000); //Источник света
+    const LIGHT = new Light(0, 0, 10, 7000); //Источник света
     let canRotate;
 
     let canPrint = {
@@ -63,19 +58,17 @@ window.onload = function () {
     function wheel(event) {
         const delta = (event.wheelDelta > 0) ? ZOOM_IN : ZOOM_OUT;
         graph3D.zoomMatrix(delta);
+        console.log(WINDOW.CAMERA);
         graph3D.transform(WINDOW.CAMERA);
         graph3D.transform(WINDOW.CENTER);
-        graph3D.transform(WINDOW.P1);
-        graph3D.transform(WINDOW.P2);
-        graph3D.transform(WINDOW.P3);
     }
 
     function move(direction) {
         switch (direction) {
             case 'up': graph3D.rotateOxMatrix(Math.PI / 180); break;
             case 'down': graph3D.rotateOxMatrix(-Math.PI / 180); break;
-            case 'left': graph3D.rotateOyMatrix(Math.PI / 180); break;
-            case 'right': graph3D.rotateOyMatrix(-Math.PI / 180); break;
+            case 'left': graph3D.rotateOzMatrix(Math.PI / 180); break;
+            case 'right': graph3D.rotateOzMatrix(-Math.PI / 180); break;
         }
         graph3D.transform(WINDOW.CAMERA);
         graph3D.transform(WINDOW.CENTER);
@@ -198,9 +191,9 @@ window.onload = function () {
             if (subject.animation) {
                 for (let key in subject.animation) {
                     const { x, y, z } = subject.animation[key];
-                    const xn = WINDOW.CENTER.x - x;
-                    const yn = WINDOW.CENTER.y - y;
-                    const zn = WINDOW.CENTER.z - z;
+                    const xn = - x;
+                    const yn = - y;
+                    const zn = - z;
                     const alpha = Math.PI / 180;
                     graph3D.animateMatrix(xn, yn, zn, key, alpha, -xn, -yn, -zn);
                     subject.points.forEach(point => graph3D.transform(point));

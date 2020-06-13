@@ -31,7 +31,7 @@ class Canvas {
         this.canvas.addEventListener('mousedown', mousedown);
         this.canvas.addEventListener('mouseleave', mouseleave);
     }
-
+    /*
     xS(x) {
         return (x - this.WINDOW.LEFT) / this.WINDOW.WIDTH * this.canvas.width;
     }
@@ -39,15 +39,16 @@ class Canvas {
     yS(y) {
         return this.canvas.height - (this.canvas.height * (y - this.WINDOW.BOTTOM) / this.WINDOW.HEIGHT);
     }
-
-    xSPolygon(x) {
+    */
+    xS(x) {
         return x / this.WINDOW.WIDTH * this.canvas.width + this.canvas.width/2;
     }
 
-    ySPolygon(y) {
+    yS(y) {
         return this.canvas.height - y  / this.WINDOW.HEIGHT * this.canvas.height - this.canvas.height/2;
     }
 
+    /*
     sx(x) {
         return x * this.WINDOW.WIDTH / this.canvas.width;
     }
@@ -56,6 +57,7 @@ class Canvas {
         return -y * this.WINDOW.HEIGHT / this.canvas.height;
     }
 
+    */
     // Очистить
     clear() {
         this.contextV.fillStyle = '#000000';
@@ -92,9 +94,9 @@ class Canvas {
         this.contextV.fillStyle = color;
         this.contextV.strokeStyle = color;
         this.contextV.beginPath();
-        this.contextV.moveTo(this.xSPolygon(points[0].x), this.ySPolygon(points[0].y));
+        this.contextV.moveTo(this.xS(points[0].x), this.yS(points[0].y));
         for (let i = 1; i < points.length; i++) {
-            this.contextV.lineTo(this.xSPolygon(points[i].x), this.ySPolygon(points[i].y));
+            this.contextV.lineTo(this.xS(points[i].x), this.yS(points[i].y));
         }
         this.contextV.closePath();
         this.contextV.stroke();

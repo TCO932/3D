@@ -1,17 +1,24 @@
-Surfaces.prototype.cone = (count = 20, R = 3, color = 'FF0000') => {
+Surfaces.prototype.ellipsoid = (
+    count = 20,
+    R = 3,
+    point = new Point(0, 0, 0), 
+    a = 5,
+    b = 2,
+    c = 2,
+    color = 'FF0000',
+    animation
+) => {
     const points = [];
     const edges = [];
     const polygons = [];
 
     // Расставить точки
-    const size = 10;
-    const delta1 = size / count;
-    const delta2 = Math.PI * 2 / count;
-    for (let i = -count/2; i <= count/2; i ++) {
-        for (let j = 0; j < Math.PI * 2; j+= delta2) {
-            const x = delta1 * i * Math.cos(j);
-            const y = delta1 * i * Math.sin(j);
-            const z = delta1 * i;
+    const delta = Math.PI * 2 / count;
+    for (let i = 0; i <= Math.PI; i += delta) {
+        for (let j = 0; j < Math.PI * 2; j+= delta) {
+            const x = point.x + R * a * Math.sin(i) * Math.cos(j);
+            const y = point.y + R * b * Math.sin(i) * Math.sin(j);
+            const z = point.z + R * c * Math.cos(i);
             points.push(new Point(x, y, z));
         }
     }
@@ -38,5 +45,5 @@ Surfaces.prototype.cone = (count = 20, R = 3, color = 'FF0000') => {
         }
     }
 
-    return new Subject(points, edges, polygons);
+    return new Subject(points, edges, polygons, animation);
 }
